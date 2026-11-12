@@ -15,7 +15,17 @@
                 @endcan
                 @can('viewAny', App\Models\Category::class)
                     <li class="nav-item {{ request()->routeIs('dashboard.categories.*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('dashboard.categories.index') }}" @if(request()->routeIs('dashboard.categories.*')) aria-current="page" @endif>{{ __('categories.title') }}</a>
+                        <a class="nav-link" href="{{ route('dashboard.categories.index') }}" @if(request()->routeIs('dashboard.categories.*')) aria-current="page" @endif>{{ __('ui.categories.title') }}</a>
+                    </li>
+                @endcan
+                @can('viewAny', App\Models\Currency::class)
+                    <li class="nav-item {{ request()->routeIs('dashboard.currencies.*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('dashboard.currencies.index') }}" @if(request()->routeIs('dashboard.currencies.*')) aria-current="page" @endif>{{ __('ui.currencies.title') }}</a>
+                    </li>
+                @endcan
+                @can('viewAny', App\Models\CurrencyExchange::class)
+                    <li class="nav-item {{ request()->routeIs('dashboard.currency-exchanges.*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('dashboard.currency-exchanges.index') }}" @if(request()->routeIs('dashboard.currency-exchanges.*')) aria-current="page" @endif>{{ __('ui.currency_exchanges.title') }}</a>
                     </li>
                 @endcan
                 @if(Route::has('dashboard.examples.index'))

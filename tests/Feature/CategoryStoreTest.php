@@ -31,12 +31,12 @@ class CategoryStoreTest extends TestCase
     public function test_ajax_saves_both_translations_and_reads_them_through_astrotomic(): void
     {
         $response = $this->actingAs($this->admin())->postJson(route('dashboard.categories.store'), [
-            'name_ar' => 'أدوات مكتبية', 'name_en' => 'Stationery', 'id' => 999,
-        ])->assertCreated()->assertJsonPath('message', __('categories.created'));
+            'name_ar' => 'Ã˜Â£Ã˜Â¯Ã™Ë†Ã˜Â§Ã˜Âª Ã™â€¦Ã™Æ’Ã˜ÂªÃ˜Â¨Ã™Å Ã˜Â©', 'name_en' => 'Stationery', 'id' => 999,
+        ])->assertCreated()->assertJsonPath('message', __('ui.categories.created'));
 
         $category = Category::findOrFail($response->json('category_id'));
         $this->assertNotSame(999, $category->id);
-        $this->assertSame('أدوات مكتبية', $category->translate('ar')->name);
+        $this->assertSame('Ã˜Â£Ã˜Â¯Ã™Ë†Ã˜Â§Ã˜Âª Ã™â€¦Ã™Æ’Ã˜ÂªÃ˜Â¨Ã™Å Ã˜Â©', $category->translate('ar')->name);
         $this->assertSame('Stationery', $category->translate('en')->name);
         $this->assertDatabaseCount('categories', 1);
         $this->assertDatabaseCount('category_translations', 2);
@@ -47,11 +47,11 @@ class CategoryStoreTest extends TestCase
         $this->actingAs($this->admin())->withSession(['locale' => 'ar']);
         $response = $this->postJson(route('dashboard.categories.store'), ['name_en' => ['invalid']])
             ->assertUnprocessable()->assertJsonValidationErrors(['name_ar', 'name_en']);
-        $this->assertStringContainsString('مطلوب', $response->json('errors.name_ar.0'));
-        $this->assertStringContainsString('نصًا', $response->json('errors.name_en.0'));
+        $this->assertStringContainsString('Ã™â€¦Ã˜Â·Ã™â€žÃ™Ë†Ã˜Â¨', $response->json('errors.name_ar.0'));
+        $this->assertStringContainsString('Ã™â€ Ã˜ÂµÃ™â€¹Ã˜Â§', $response->json('errors.name_en.0'));
         $this->withSession(['locale' => 'en'])->postJson(route('dashboard.categories.store'), [
-            'name_ar' => 'اسم', 'name_en' => str_repeat('a', 256),
-        ])->assertUnprocessable()->assertJsonPath('errors.name_en.0', 'The Name — English must not exceed 255 characters.');
+            'name_ar' => 'Ã˜Â§Ã˜Â³Ã™â€¦', 'name_en' => str_repeat('a', 256),
+        ])->assertUnprocessable()->assertJsonPath('errors.name_en.0', 'The Name Ã¢â‚¬â€ English must not exceed 255 characters.');
         $this->assertDatabaseCount('categories', 0);
     }
 
@@ -60,7 +60,7 @@ class CategoryStoreTest extends TestCase
         $this->actingAs($this->admin());
         foreach ([['name_fr' => 'French'], ['name_fr' => null], ['name_zz' => 'Unknown'], ['name' => ['ar' => 'Old format']]] as $extra) {
             $this->postJson(route('dashboard.categories.store'), array_merge([
-                'name_ar' => 'فئة', 'name_en' => 'Category',
+                'name_ar' => 'Ã™ÂÃ˜Â¦Ã˜Â©', 'name_en' => 'Category',
             ], $extra))->assertUnprocessable()->assertJsonValidationErrors(array_keys($extra));
         }
         $this->assertDatabaseCount('categories', 0);
@@ -81,7 +81,7 @@ class CategoryStoreTest extends TestCase
         $this->postJson(route('dashboard.categories.store'), [])->assertUnauthorized();
         foreach (['sales', 'warehouse'] as $role) {
             $this->actingAs(User::factory()->create(['role' => $role]))->get(route('dashboard.categories.create'))->assertForbidden();
-            $this->postJson(route('dashboard.categories.store'), ['name_ar' => 'فئة', 'name_en' => 'Category'])->assertForbidden();
+            $this->postJson(route('dashboard.categories.store'), ['name_ar' => 'Ã™ÂÃ˜Â¦Ã˜Â©', 'name_en' => 'Category'])->assertForbidden();
         }
         $this->assertDatabaseCount('categories', 0);
     }
@@ -89,19 +89,19 @@ class CategoryStoreTest extends TestCase
     public function test_html_submission_flashes_success_and_returns_to_form(): void
     {
         $this->actingAs($this->admin())->post(route('dashboard.categories.store'), [
-            'name_ar' => 'فئة', 'name_en' => 'Category',
-        ])->assertRedirect(route('dashboard.categories.create'))->assertSessionHas('success', __('categories.created'));
+            'name_ar' => 'Ã™ÂÃ˜Â¦Ã˜Â©', 'name_en' => 'Category',
+        ])->assertRedirect(route('dashboard.categories.create'))->assertSessionHas('success', __('ui.categories.created'));
     }
 
     public function test_category_list_reads_the_selected_translation(): void
     {
         $this->actingAs($this->admin())->postJson(route('dashboard.categories.store'), [
-            'name_ar' => 'مستلزمات مكتبية', 'name_en' => 'Office supplies',
+            'name_ar' => 'Ã™â€¦Ã˜Â³Ã˜ÂªÃ™â€žÃ˜Â²Ã™â€¦Ã˜Â§Ã˜Âª Ã™â€¦Ã™Æ’Ã˜ÂªÃ˜Â¨Ã™Å Ã˜Â©', 'name_en' => 'Office supplies',
         ])->assertCreated();
         $this->post(route('dashboard.locale'), ['locale' => 'en', 'page' => 'dashboard/categories'])->assertRedirect(route('dashboard.categories.index'));
         $this->get(route('dashboard.categories.index'))->assertOk()->assertSee('Office supplies');
         $this->post(route('dashboard.locale'), ['locale' => 'ar', 'page' => 'dashboard/categories'])->assertRedirect(route('dashboard.categories.index'));
-        $this->get(route('dashboard.categories.index'))->assertOk()->assertSee('مستلزمات مكتبية');
+        $this->get(route('dashboard.categories.index'))->assertOk()->assertSee('Ã™â€¦Ã˜Â³Ã˜ÂªÃ™â€žÃ˜Â²Ã™â€¦Ã˜Â§Ã˜Âª Ã™â€¦Ã™Æ’Ã˜ÂªÃ˜Â¨Ã™Å Ã˜Â©');
     }
 
     public function test_translation_failure_rolls_back_parent_and_all_translations(): void
@@ -112,7 +112,7 @@ class CategoryStoreTest extends TestCase
             }
         });
         $this->actingAs($this->admin())->postJson(route('dashboard.categories.store'), [
-            'name_ar' => 'فئة', 'name_en' => 'Category',
+            'name_ar' => 'Ã™ÂÃ˜Â¦Ã˜Â©', 'name_en' => 'Category',
         ])->assertStatus(500);
         $this->assertDatabaseCount('categories', 0);
         $this->assertDatabaseCount('category_translations', 0);
@@ -121,7 +121,7 @@ class CategoryStoreTest extends TestCase
     public function test_translation_locale_is_unique_per_category(): void
     {
         $response = $this->actingAs($this->admin())->postJson(route('dashboard.categories.store'), [
-            'name_ar' => 'فئة', 'name_en' => 'Category',
+            'name_ar' => 'Ã™ÂÃ˜Â¦Ã˜Â©', 'name_en' => 'Category',
         ])->assertCreated();
         $this->expectException(QueryException::class);
         DB::table('category_translations')->insert([

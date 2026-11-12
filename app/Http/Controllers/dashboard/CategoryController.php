@@ -56,13 +56,13 @@ class CategoryController extends Controller
 
         if ($request->expectsJson()) {
             return response()->json([
-                'message' => __('categories.created'),
+                'message' => __('ui.categories.created'),
                 'redirect_url' => route('dashboard.categories.create'),
                 'category_id' => $category->id,
             ], 201);
         }
 
-        return to_route('dashboard.categories.create')->with('success', __('categories.created'));
+        return to_route('dashboard.categories.create')->with('success', __('ui.categories.created'));
 
     }
 
@@ -99,10 +99,10 @@ class CategoryController extends Controller
         }, 3);
 
         if ($request->expectsJson()) {
-            return response()->json(['message' => __('categories.updated'), 'redirect_url' => route('dashboard.categories.index')]);
+            return response()->json(['message' => __('ui.categories.updated'), 'redirect_url' => route('dashboard.categories.index')]);
         }
 
-        return to_route('dashboard.categories.index')->with('success', __('categories.updated'));
+        return to_route('dashboard.categories.index')->with('success', __('ui.categories.updated'));
     }
 
     /**
@@ -117,15 +117,15 @@ class CategoryController extends Controller
             }, 3);
         } catch (QueryException $exception) {
             if (in_array((int) ($exception->errorInfo[1] ?? 0), [1451, 19], true)) {
-                throw ValidationException::withMessages(['delete' => __('categories.in_use')]);
+                throw ValidationException::withMessages(['delete' => __('ui.categories.in_use')]);
             }
             throw $exception;
         }
 
         if ($request->expectsJson()) {
-            return response()->json(['message' => __('categories.deleted'), 'redirect_url' => route('dashboard.categories.index')]);
+            return response()->json(['message' => __('ui.categories.deleted'), 'redirect_url' => route('dashboard.categories.index')]);
         }
 
-        return to_route('dashboard.categories.index')->with('success', __('categories.deleted'));
+        return to_route('dashboard.categories.index')->with('success', __('ui.categories.deleted'));
     }
 }

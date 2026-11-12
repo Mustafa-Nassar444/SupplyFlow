@@ -10,7 +10,7 @@
     </div>
     <div class="card"><x-dashboard.empty-state :title="__('ui.empty_title')" :description="__('ui.empty_description')">
         @can('viewAny', App\Models\Category::class)
-            <a class="btn btn-primary" href="{{ route('dashboard.categories.index') }}">{{ __('categories.title') }}</a>
+            <a class="btn btn-primary" href="{{ route('dashboard.categories.index') }}">{{ __('ui.categories.title') }}</a>
         @endcan
     </x-dashboard.empty-state></div>
 @endsection

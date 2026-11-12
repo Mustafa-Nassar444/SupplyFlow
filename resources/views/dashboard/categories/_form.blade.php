@@ -26,7 +26,7 @@
                 <div class="tab-pane {{ $language->code === $selectedLanguage ? 'active show' : '' }}"
                      id="category-language-pane-{{ $language->code }}" role="tabpanel"
                      aria-labelledby="category-language-tab-{{ $language->code }}">
-                    <label class="form-label required" for="{{ $field }}">{{ __('ui.name') }} — {{ $language->name }}</label>
+                    <label class="form-label required" for="{{ $field }}">{{ __('ui.name') }} ( {{ $language->name }} )</label>
                     <input id="{{ $field }}" name="{{ $field }}" type="text"
                            class="form-control @error($field) is-invalid @enderror"
                            value="{{ is_string($value) ? $value : '' }}" lang="{{ $language->code }}"
@@ -43,7 +43,7 @@
         </div>
     </div>
     <div class="card-footer d-flex gap-2">
-        <button type="submit" class="btn btn-primary">{{ __('categories.save') }}</button>
+        <button type="submit" class="btn btn-primary">{{ __('ui.categories.save') }}</button>
         <a class="btn" href="{{ route('dashboard.categories.index') }}">{{ __('dashboard_ui.cancel') }}</a>
     </div>
 </form>

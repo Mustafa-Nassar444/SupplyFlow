@@ -43,15 +43,15 @@ class CategoryRequest extends FormRequest
 
     public function messages(): array
     {
-        $messages = ['name.missing' => __('categories.validation.format')];
+        $messages = ['name.missing' => __('validation.format')];
         foreach ($this->rules() as $field => $rules) {
             if (! str_starts_with($field, 'name_')) {
                 continue;
             }
             foreach (['required', 'string', 'max', 'prohibited'] as $rule) {
-                $messages[$field.'.'.$rule] = __('categories.validation.'.$rule);
+                $messages[$field.'.'.$rule] = __('validation.'.$rule);
             }
-            $messages[$field.'.missing'] = __('categories.validation.prohibited');
+            $messages[$field.'.missing'] = __('validation.prohibited');
         }
 
         return $messages;

@@ -1,10 +1,10 @@
 @extends('layouts.dashboard')
-@section('title', __('categories.title'))
+@section('title', __('ui.categories.title'))
 @section('content')
-    <x-dashboard.breadcrumb :items="[['label' => __('ui.dashboard'), 'url' => route('dashboard')], ['label' => __('categories.title')]]" />
-    <x-dashboard.page-header :title="__('categories.title')">
+    <x-dashboard.breadcrumb :items="[['label' => __('ui.dashboard'), 'url' => route('dashboard')], ['label' => __('ui.categories.title')]]" />
+    <x-dashboard.page-header :title="__('ui.categories.title')">
         @can('create', App\Models\Category::class)
-            <a class="btn btn-primary" href="{{ route('dashboard.categories.create') }}">{{ __('categories.create') }}</a>
+            <a class="btn btn-primary" href="{{ route('dashboard.categories.create') }}">{{ __('ui.categories.create') }}</a>
         @endcan
     </x-dashboard.page-header>
     @if(session('success'))
@@ -12,7 +12,7 @@
     @endif
     <div class="card">
         @if($data->isEmpty())
-            <x-dashboard.empty-state :title="__('categories.empty')" />
+            <x-dashboard.empty-state :title="__('ui.categories.empty')" />
         @else
             <div class="table-responsive">
                 <table class="table table-vcenter demo-table mb-0">
@@ -20,17 +20,17 @@
                     <tbody>
                         @foreach($data as $item)
                             <tr data-category-id="{{ $item->id }}">
-                                <td data-label="{{ __('ui.name') }}">{{ $item->name ?? '—' }}</td>
+                                <td data-label="{{ __('ui.name') }}">{{ $item->name ?? 'Ã¢â‚¬â€' }}</td>
                                 <td data-label="{{ __('ui.actions') }}">
                                     <div class="d-flex gap-2">
                                         @can('update', $item)
-                                            <a class="btn btn-sm" href="{{ route('dashboard.categories.edit', $item) }}">{{ __('categories.edit') }}</a>
+                                            <a class="btn btn-sm" href="{{ route('dashboard.categories.edit', $item) }}">{{ __('ui.categories.edit') }}</a>
                                         @endcan
                                         @can('delete', $item)
                                             <button type="button" class="btn btn-sm btn-outline-danger"
                                                     data-delete-url="{{ route('dashboard.categories.destroy', $item) }}"
                                                     data-delete-success-action="redirect"
-                                                    data-delete-name="{{ $item->name ?? __('categories.title') }}">
+                                                    data-delete-name="{{ $item->name ?? __('ui.categories.title') }}">
                                                 {{ __('dashboard_ui.delete') }}
                                             </button>
                                         @endcan

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\dashboard\CategoryController;
+use App\Http\Controllers\dashboard\CurrencyController;
+use App\Http\Controllers\dashboard\CurrencyExchangeController;
 use App\Http\Controllers\DashboardExampleController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\LocaleController;
@@ -32,3 +34,7 @@ Route::post('/dashboard/language', LocaleController::class)->name('dashboard.loc
 // Route::get('/dashboard/examples/form', DashboardExampleController::class)->name('dashboard.examples.form');
 
 Route::resource('dashboard/categories', CategoryController::class)->middleware(['auth'])->names('dashboard.categories');
+Route::resource('dashboard/currencies', CurrencyController::class)->middleware(['auth'])->names('dashboard.currencies');
+Route::resource('dashboard/currency-exchanges', CurrencyExchangeController::class)->middleware(['auth'])->names('dashboard.currency-exchanges');
+Route::patch('dashboard/currencies/{currency}/status', [CurrencyController::class, 'status'])
+    ->middleware(['auth'])->name('dashboard.currencies.status');

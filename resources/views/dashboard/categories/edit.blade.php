@@ -1,12 +1,12 @@
 @extends('layouts.dashboard')
-@section('title', __('categories.edit'))
+@section('title', __('ui.categories.edit'))
 @section('content')
     <x-dashboard.breadcrumb :items="[
         ['label' => __('ui.dashboard'), 'url' => route('dashboard')],
-        ['label' => __('categories.title'), 'url' => route('dashboard.categories.index')],
-        ['label' => __('categories.edit')],
+        ['label' => __('ui.categories.title'), 'url' => route('dashboard.categories.index')],
+        ['label' => __('ui.categories.edit')],
     ]" />
-    <x-dashboard.page-header :title="__('categories.edit')" :description="__('categories.description')" />
+    <x-dashboard.page-header :title="__('ui.categories.edit')" :description="__('ui.categories.description')" />
     @if($errors->any())
         <x-dashboard.alert type="danger">{{ __('ui.errors') }}</x-dashboard.alert>
     @endif

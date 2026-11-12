@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'language_ar' => 'العربية', 'language_en' => 'English',
+    'language_ar' => 'A', 'language_en' => 'English',
     'dashboard' => 'Overview', 'examples' => 'UI examples', 'list' => 'List example', 'form' => 'Form example',
     'preview' => 'UI preview · demonstration data only', 'language' => 'Language', 'skip' => 'Skip to content',
     'navigation' => 'Navigation', 'breadcrumb' => 'Breadcrumb', 'description' => 'A reusable Blade foundation. These figures are demonstration data, not business records.',
@@ -16,6 +16,44 @@ return [
     'validation' => 'Please enter a valid value within the displayed limit.',
     'errors' => 'Review the highlighted fields.', 'form_description' => 'Validation demo only: name up to 100 characters; email up to 255; notes up to 1000.',
     'list_description' => 'Static demonstration rows. Search and filters are disabled display examples.',
+    'main'=> "Main",
+    'active'=> "Active",
+    'yes'=>"Yes",
+    'no'=>"No",
     'view_form' => 'Open example form', 'sample_name' => 'Sample record', 'demo_title' => 'Demonstration details',
     'close' => 'Close', 'details' => 'View demo details', 'loading' => 'Checking…',
+    'categories' => [
+        'title' => 'Categories',
+        'create' => 'Create category',
+        'description' => 'Enter the category name in each active language.',
+        'save' => 'Save category',
+        'created' => 'Category and translations saved successfully.',
+        'edit' => 'Edit category',
+        'updated' => 'Category and translations updated successfully.',
+        'deleted' => 'Category deleted successfully.',
+        'in_use' => 'This category is in use and cannot be deleted.',
+        'empty' => 'No categories yet.'
+        ],
+    'currencies' => [
+        'title' => 'Currencies',
+        'create' => 'Create currency',
+        'edit' => 'Edit currency',
+        'description' => 'Manage the currencies used by documents and accounts.',
+        'save' => 'Save currency',
+        'created' => 'Currency and translations saved successfully.',
+        'updated' => 'Currency and translations updated successfully.',
+        'deleted' => 'Currency deleted successfully.',
+        'empty' => 'No currencies yet.',
+        'symbol' => 'Symbol',
+        'is_active' => 'Active',
+        'is_main' => 'Base currency',
+        'in_use' => 'This currency is in use and cannot be deleted.',
+        'activate_first' => 'Activate the currency before making it the base currency.',
+        'keep_main' => 'Choose another base currency before disabling this currency.',
+        'validation' => [
+            'symbol' => 'The symbol must be text and no longer than 10 characters.',
+            'boolean' => 'The :attribute value must be true or false.'
+            ]
+        ],
+    'currency_exchanges' => ['title' => 'Currency exchange rates', 'create' => 'Add exchange rate', 'edit' => 'Edit exchange rate', 'description' => 'Manage conversion rates from the base currency.', 'save' => 'Save exchange rate', 'created' => 'Exchange rate created successfully.', 'updated' => 'Exchange rate updated successfully.', 'deleted' => 'Exchange rate deleted successfully.', 'empty' => 'No exchange rates yet.', 'base_currency' => 'Base currency', 'currency' => 'Currency', 'rate' => 'Exchange rate', 'main_currency_required' => 'Set an active base currency before adding an exchange rate.', 'in_use' => 'This exchange rate cannot be deleted because it is in use.'],
 ];

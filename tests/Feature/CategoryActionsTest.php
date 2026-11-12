@@ -23,7 +23,7 @@ class CategoryActionsTest extends TestCase
 
     private function category(): Category
     {
-        return Category::create(['ar' => ['name' => 'الفئة الأصلية'], 'en' => ['name' => 'Original category']]);
+        return Category::create(['ar' => ['name' => 'Ã˜Â§Ã™â€žÃ™ÂÃ˜Â¦Ã˜Â© Ã˜Â§Ã™â€žÃ˜Â£Ã˜ÂµÃ™â€žÃ™Å Ã˜Â©'], 'en' => ['name' => 'Original category']]);
     }
 
     private function admin(): User
@@ -55,14 +55,14 @@ class CategoryActionsTest extends TestCase
         $category->translateOrNew('fr')->name = 'Existing French';
         $category->save();
         $this->actingAs($this->admin())->get(route('dashboard.categories.edit', $category))->assertOk()
-            ->assertSee('value="Original category"', false)->assertSee('الفئة الأصلية')
+            ->assertSee('value="Original category"', false)->assertSee('Ã˜Â§Ã™â€žÃ™ÂÃ˜Â¦Ã˜Â© Ã˜Â§Ã™â€žÃ˜Â£Ã˜ÂµÃ™â€žÃ™Å Ã˜Â©')
             ->assertSee('name="_method" value="PUT"', false)->assertDontSee('name="name_fr"', false);
         $this->putJson(route('dashboard.categories.update', $category), [
-            'name_ar' => 'الفئة المعدلة', 'name_en' => 'Updated category',
-        ])->assertOk()->assertJsonPath('message', __('categories.updated'));
+            'name_ar' => 'Ã˜Â§Ã™â€žÃ™ÂÃ˜Â¦Ã˜Â© Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â¹Ã˜Â¯Ã™â€žÃ˜Â©', 'name_en' => 'Updated category',
+        ])->assertOk()->assertJsonPath('message', __('ui.categories.updated'));
         $category->refresh();
         $this->assertSame('Updated category', $category->translate('en')->name);
-        $this->assertSame('الفئة المعدلة', $category->translate('ar')->name);
+        $this->assertSame('Ã˜Â§Ã™â€žÃ™ÂÃ˜Â¦Ã˜Â© Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â¹Ã˜Â¯Ã™â€žÃ˜Â©', $category->translate('ar')->name);
         $this->assertSame('Existing French', $category->translate('fr')->name);
         $this->assertDatabaseCount('categories', 1);
     }
@@ -95,7 +95,7 @@ class CategoryActionsTest extends TestCase
         $category = $this->category();
         $other = $this->category();
         $this->actingAs($this->admin())->deleteJson(route('dashboard.categories.destroy', $category))->assertOk()
-            ->assertJsonPath('message', __('categories.deleted'));
+            ->assertJsonPath('message', __('ui.categories.deleted'));
         $this->assertDatabaseMissing('categories', ['id' => $category->id]);
         $this->assertDatabaseMissing('category_translations', ['category_id' => $category->id]);
         $this->assertDatabaseHas('categories', ['id' => $other->id]);
@@ -121,7 +121,7 @@ class CategoryActionsTest extends TestCase
     {
         $category = $this->category();
         $this->actingAs($this->admin())->put(route('dashboard.categories.update', $category), [
-            'name_ar' => 'اسم', 'name_en' => 'Name',
+            'name_ar' => 'Ã˜Â§Ã˜Â³Ã™â€¦', 'name_en' => 'Name',
         ])->assertRedirect(route('dashboard.categories.index'))->assertSessionHas('success');
         $this->delete(route('dashboard.categories.destroy', $category))
             ->assertRedirect(route('dashboard.categories.index'))->assertSessionHas('success');
